@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <form [formGroup]="form01">
+                <div class="container forms">
+                    <div class="row mb-3">
+                        <h2>Inspección Técnica de Estación GNV</h2>
+                        <h6>Forma:</h6>
+                        <hr>
+                    </div>
+                    <div class="row mb-3">
+                        <mat-form-field class="col">
+                            <mat-label>Estados</mat-label>
+                            <mat-select id="estado" formControlName="estado" (selectionChange)="onSelectionChangeEstado(); onSelectionChangeMunicipio()">
+                                <mat-option *ngFor="let estado of formOptions?.estados" [value]="estado">{{estado.nombre}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col">
+                            <mat-label>Municipio</mat-label>
+                            <mat-select id="municipio" formControlName="municipio" (selectionChange)="onSelectionChangeMunicipio()">
+                                <mat-option *ngFor="let municipio of municipios" [value]="municipio">{{municipio.nombre}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col">
+                            <mat-label>Parroquia</mat-label>
+                            <mat-select id="parroquia" formControlName="parroquia">
+                                <mat-option *ngFor="let parroquia of parroquias" [value]="parroquia">{{parroquia.nombre}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
