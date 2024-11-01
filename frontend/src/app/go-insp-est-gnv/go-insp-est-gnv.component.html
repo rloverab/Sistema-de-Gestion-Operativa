@@ -1,35 +1,256 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-lg-9">
-            <form [formGroup]="form01">
-                <div class="container forms">
-                    <div class="row mb-3">
-                        <h2>Inspección Técnica de Estación GNV</h2>
-                        <h6>Forma:</h6>
-                        <hr>
-                    </div>
-                    <div class="row mb-3">
-                        <mat-form-field class="col">
-                            <mat-label>Estados</mat-label>
-                            <mat-select id="estado" formControlName="estado" (selectionChange)="onSelectionChangeEstado(); onSelectionChangeMunicipio()">
-                                <mat-option *ngFor="let estado of formOptions?.estados" [value]="estado">{{estado.nombre}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="col">
-                            <mat-label>Municipio</mat-label>
-                            <mat-select id="municipio" formControlName="municipio" (selectionChange)="onSelectionChangeMunicipio()">
-                                <mat-option *ngFor="let municipio of municipios" [value]="municipio">{{municipio.nombre}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="col">
-                            <mat-label>Parroquia</mat-label>
-                            <mat-select id="parroquia" formControlName="parroquia">
-                                <mat-option *ngFor="let parroquia of parroquias" [value]="parroquia">{{parroquia.nombre}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </form>
+        <div class="col-lg-8">
+            <mat-stepper orientation="vertical" linear="false" #stepper>
+                <mat-step [stepControl]="formStep01">
+                    <form [formGroup]="formStep01">
+                        <ng-template matStepLabel>Datos de la estación</ng-template>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput type="text" id="nombre" formControlName="nombre">
+                            </mat-form-field>
+                            <mat-form-field class="col-lg-3">
+                                <mat-label>RIF</mat-label>
+                                <input matInput type="text" id="rif" formControlName="rif">
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Estados</mat-label>
+                                <mat-select id="estado" formControlName="estado"
+                                    (selectionChange)="onSelectionChangeEstado(); onSelectionChangeMunicipio()">
+                                    <mat-option *ngFor="let estado of formOptions?.estados"
+                                        [value]="estado">{{estado.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Municipio</mat-label>
+                                <mat-select id="municipio" formControlName="municipio"
+                                    (selectionChange)="onSelectionChangeMunicipio()">
+                                    <mat-option *ngFor="let municipio of municipios"
+                                        [value]="municipio">{{municipio.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Parroquia</mat-label>
+                                <mat-select id="parroquia" formControlName="parroquia">
+                                    <mat-option *ngFor="let parroquia of parroquias"
+                                        [value]="parroquia">{{parroquia.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput type="text" id="direccion" formControlName="direccion">
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Ubicación</mat-label>
+                                <mat-select id="ubicacion" formControlName="ubicacion">
+                                    <mat-option *ngFor="let ubicacion of ubicaciones"
+                                        [value]="ubicacion">{{ubicacion.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Tipo de estación</mat-label>
+                                <mat-select id="tipoEstacion" formControlName="tipoEstacion">
+                                    <mat-option *ngFor="let tipo of tiposEstacion"
+                                        [value]="tipo">{{tipo.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Identificación de servicios</mat-label>
+                                <mat-select id="identificacionServicios" formControlName="identificacionServicios"
+                                    multiple>
+                                    <mat-option *ngFor="let servicio of identificacionesServicio"
+                                        [value]="servicio">{{servicio.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Tipo de consumo</mat-label>
+                                <mat-select id="tipoConsumo" (selectionChange)="onSelectionChangeTipoConsumo()"
+                                    formControlName="tipoConsumo">
+                                    <mat-option *ngFor="let tipo of tiposConsumo"
+                                        [value]="tipo">{{tipo.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Horario</mat-label>
+                                <mat-select id="horario" formControlName="horario" multiple>
+                                    <mat-option *ngFor="let horario of horarios"
+                                        [value]="horario">{{horario.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div>
+                                <button mat-button matStepperNext>Siguiente</button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="formStep02">
+                    <form [formGroup]="formStep02">
+                        <ng-template matStepLabel>Características de la estación</ng-template>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Tipo de isla</mat-label>
+                                <mat-select id="tipoIsla" formControlName="tipoIsla">
+                                    <mat-option *ngFor="let tipo of tiposIsla"
+                                        [value]="tipo">{{tipo.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Iluminación</mat-label>
+                                <mat-select id="isla" formControlName="iluminacion">
+                                    <mat-option *ngFor="let condicion of condicionesIluminacion"
+                                        [value]="condicion">{{condicion.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Señalizaciones horizontales</mat-label>
+                                <mat-select id="sh" formControlName="sh" multiple>
+                                    <mat-option *ngFor="let senal of senalesHorizontales"
+                                        [value]="senal">{{senal.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Señalizaciones verticales</mat-label>
+                                <mat-select id="sv" formControlName="sv" multiple>
+                                    <mat-option *ngFor="let senal of senalesVerticales"
+                                        [value]="senal">{{senal.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <div class="row">
+                            <div class="col">
+                                <mat-label>Servicios adicionales</mat-label>
+                                <mat-divider></mat-divider>
+                                <mat-checkbox>Establecimiento mecánico</mat-checkbox>
+                            </div>
+                            <mat-form-field class="col">
+                                <mat-label>Delimitación perimetral del área</mat-label>
+                                <mat-select id="delimitacion" formControlName="delimitacion" multiple>
+                                    <mat-option *ngFor="let delimitacion of delimitacionesPerimetrales"
+                                        [value]="delimitacion">{{delimitacion.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-label>Pavimento</mat-label>
+                                <mat-divider></mat-divider>
+                                <div class="row">
+                                    <mat-form-field class="col">
+                                        <mat-label>Tipo</mat-label>
+                                        <mat-select id="tipoPavimento" formControlName="tipoPavimento"
+                                            (selectionChange)="onSelectionChangeEstado(); onSelectionChangeMunicipio()">
+                                            <mat-option *ngFor="let tipo of tiposPavimento"
+                                                [value]="tipo">{{tipo.nombre}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field class="col">
+                                        <mat-label>Distancia (m)</mat-label>
+                                        <input matInput type="number">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <mat-label>Áreas</mat-label>
+                                <mat-divider></mat-divider>
+                                <mat-checkbox id="aglomeracion" formControlName="aglomeracion">Espacio para la
+                                    concentracion de muchas personas</mat-checkbox>
+                            </div>
+                        </div>
+                        <div>
+                            <button mat-button matStepperPrevious>Anterior</button>
+                            <button mat-button matStepperNext>Siguiente</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="formStep03">
+                    <form [formGroup]="formStep03">
+                        <ng-template matStepLabel>Estación de Medición y Regulación - Componentes</ng-template>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Infraestructura</mat-label>
+                                <mat-select id="infraestructura" formControlName="infraestructura">
+                                    <mat-option *ngFor="let infraestructura of infraestructuras"
+                                        [value]="infraestructura">{{infraestructura.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Maleza</mat-label>
+                                <mat-select id="maleza" formControlName="maleza">
+                                    <mat-option *ngFor="let maleza of malezas"
+                                        [value]="maleza">{{maleza.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Estado de la pintura</mat-label>
+                                <mat-select id="estadoPintura" formControlName="estadoPintura">
+                                    <mat-option *ngFor="let estado of estadosPintura"
+                                        [value]="estado">{{estado.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Accesibilidad</mat-label>
+                                <mat-select id="Accesibilidad" formControlName="accesibilidad">
+                                    <mat-option *ngFor="let respuesta of respuestas"
+                                        [value]="respuesta">{{respuesta.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Corrosión en tuberías</mat-label>
+                                <mat-select id="corrosion" formControlName="corrosion">
+                                    <mat-option *ngFor="let respuesta of respuestas"
+                                        [value]="respuesta">{{respuesta.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Diámetro de las tuberías de entrada</mat-label>
+                                <mat-select id="diametroEntrada" formControlName="diametroEntrada">
+                                    <mat-option *ngFor="let diametro of diametroTuberias"
+                                        [value]="diametro">{{diametro.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>Diámetro de las tuberías de entrada</mat-label>
+                                <mat-select id="diametroSalida" formControlName="diametroSalida">
+                                    <mat-option *ngFor="let respuesta of diametroTuberias"
+                                        [value]="respuesta">{{respuesta.nombre}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button mat-button matStepperPrevious>Anterior</button>
+                            <button mat-button matStepperNext>Siguiente</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="formStep04">
+                    <form [formGroup]="formStep04">
+                        <ng-template matStepLabel>Estación de Medición y Regulación - Otros Componentes</ng-template>
+                        <div class="row">
+                            
+                        </div>
+                        <div>
+                            <button mat-button matStepperPrevious>Anterior</button>
+                            <button mat-button (click)="stepper.reset()">Reiniciar</button>
+                        </div>
+                    </form>
+                </mat-step>
+            </mat-stepper>
         </div>
     </div>
 </div>

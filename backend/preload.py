@@ -17,4 +17,4 @@ def load_territorios(pathfile_csv:str):
         except BulkWriteError as bwe:
             print(bwe.details["writeConcernErrors"])
 
-load_territorios('./backend/data/territorios.csv')
+load_territorios('./data/territorios.csv')

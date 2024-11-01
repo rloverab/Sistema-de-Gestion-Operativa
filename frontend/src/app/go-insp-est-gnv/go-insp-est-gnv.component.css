@@ -1,0 +1,15 @@
+h2,
+h4 {
+    text-align: center;
+}
+
+.forms-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+}
+
+.forms-radio-button {
+    margin: 5px;
+}
